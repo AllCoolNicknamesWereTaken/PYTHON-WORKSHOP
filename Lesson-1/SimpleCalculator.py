@@ -12,3 +12,15 @@ print("dluuuuuuuu"
 print s[7];
 print s[0:7];
 print s[-7:];
+## lists
+cos = [9,7,6,4,34,66,4];
+print cos;
+cos.append(216)
+cos[2:5] = ['C', 'D', 'E'];
+print cos;
+print len(cos);
+#loop
+a, b = 0, 1
+while a < 10:
+     print(a)
+     a, b = b, a+b
