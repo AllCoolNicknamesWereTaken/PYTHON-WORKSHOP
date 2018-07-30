@@ -37,29 +37,33 @@ pixel_ar[4][13] = 1
 
 
 pygame.init()
-for (i, row) in enumerate(pixel_ar):
-    for (j, cell) in enumerate(row):
-        if pixel_ar[i][j] == 0:
-            pygame.draw.rect(screen, (225, 225, 255), ((step * j + 5), (step * i + 5), (step-5), (step-5)))
+def BoardUpdate():
+    for (i, row) in enumerate(pixel_ar):
+        for (j, cell) in enumerate(row):
+            if pixel_ar[i][j] == 0:
+                pygame.draw.rect(screen, (225, 225, 255), ((step * j + 5), (step * i + 5), (step-5), (step-5)))
 
-        else:
-            pygame.draw.rect(screen, (0, 225, 255), ((step * j + 5), (step * i + 5), (step-5), (step-5)))
+            else:
+                pygame.draw.rect(screen, (0, 225, 255), ((step * j + 5), (step * i + 5), (step-5), (step-5)))
 
 
-pygame.display.flip()
+    pygame.display.flip()
+BoardUpdate()
 pygame.display.set_caption('moje okienko')
 
 while running:
     for event in pygame.event.get():
-        if mousePosition != pygame.mouse.get_pos():
+        if pygame.mouse.get_pressed().index(0) and stop == True:
             mousePosition = pygame.mouse.get_pos()
-            print("zmiana myski elo elo")
-        elif event.type == pygame.QUIT or (event.key == pygame.K_ESCAPE if event.type == pygame.KEYDOWN else False) :
+            print(" {}, {}".format(int(mousePosition[0] / 30), int(mousePosition[1] / 30)))
+            pixel_ar[int(mousePosition[1] / 30)][int(mousePosition[0] / 30)] = 1
+            BoardUpdate()
+
+        if event.type == pygame.QUIT or (event.key == pygame.K_ESCAPE if event.type == pygame.KEYDOWN else False) :
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 stop = not stop;
-                # print(pygame.mouse.get_pressed())
     if pygame.time.get_ticks() % 500 == 0 and stop == False:
         for (i, row) in enumerate(pixel_ar):
             for (j, cell) in enumerate(row):
@@ -73,13 +77,10 @@ while running:
                 top_left = pixel_ar[i - 1][j - 1] if (i > 0 and j > 0) else 0
 
                 neighbours = bottom + top + right + left + bottom_right + bottom_left + top_left + top_right
-
                 if cell == 0 and neighbours == 3:
                     change[i][j] = 1;
-
                 elif cell == 1 and (neighbours == 1 or neighbours == 0 or neighbours == 4):
                     change[i][j] = 0
-
                 else:
                     if cell > 0:
                         change[i][j] = cell
