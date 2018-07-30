@@ -55,9 +55,12 @@ while running:
     for event in pygame.event.get():
         if pygame.mouse.get_pressed().index(0) and stop == True:
             mousePosition = pygame.mouse.get_pos()
-            print(" {}, {}".format(int(mousePosition[0] / 30), int(mousePosition[1] / 30)))
-            pixel_ar[int(mousePosition[1] / 30)][int(mousePosition[0] / 30)] = 1
+            print(" {}, {}".format(int(True), bool(0)))
+            pixel_ar[int(mousePosition[1] / 30)][int(mousePosition[0] / 30)]= \
+            (int(not bool(pixel_ar[int(mousePosition[1] / 30)][int(mousePosition[0] / 30)])))
+
             BoardUpdate()
+
 
         if event.type == pygame.QUIT or (event.key == pygame.K_ESCAPE if event.type == pygame.KEYDOWN else False) :
             running = False
