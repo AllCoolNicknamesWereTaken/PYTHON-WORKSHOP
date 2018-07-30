@@ -10,11 +10,12 @@ width1, height2 = (720/3), (540/3)
 screen = pygame.display.set_mode(size) #dlaczego tu sa dwa nawiasy lol
 background_colour = (0, 0, 0)
 running = True
-stop = False;
+stop = True;
 pixel_ar = []
 screen.fill(background_colour)
 step = 30
 change = []
+mousePosition = pygame.mouse.get_pos()
 
 for row in range(5, (height - 5), step):
     line = []
@@ -50,12 +51,15 @@ pygame.display.set_caption('moje okienko')
 
 while running:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE :
+        if mousePosition != pygame.mouse.get_pos():
+            mousePosition = pygame.mouse.get_pos()
+            print("zmiana myski elo elo")
+        elif event.type == pygame.QUIT or (event.key == pygame.K_ESCAPE if event.type == pygame.KEYDOWN else False) :
             running = False
-        if event.type == pygame.KEYDOWN:
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 stop = not stop;
-                print("mam spacje")
+                # print(pygame.mouse.get_pressed())
     if pygame.time.get_ticks() % 500 == 0 and stop == False:
         for (i, row) in enumerate(pixel_ar):
             for (j, cell) in enumerate(row):
